@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	//code
+	
+	string text,pattern;
+	cin>>text>>pattern;
+	
+	int hash;
+	int n=pattern.length();
+	int N=text.length();
+	int p=5381;
+	int d=26;
+	
+	for(int i=0;i<n;i++)
+	{
+	    int a=(pattern[i]-'A'+1);
+	    int b=pow(26,n-i-1);
+	    hash=(hash+(a * b))%p;
+	}
+	
+	int Hash=0;
+	
+	for(int i=0;i<n;i++)
+    {
+       int a=(text[i]-'A'+1);
+       int b=pow(26,n-i-1);
+	    Hash=(Hash+(a * b))%p;
+	    
+    }
+    
+    if(Hash==hash)
+    cout<<0<<endl;
+	int a=0;
+	for(int i=n;i<N;i++)
+	{
+	    a=(text[i-n]-'A'+1);
+	    Hash-=(a*(pow(26,i-1)));
+	    
+	    //we need to move Hash one index left wards,coz no. of letters are 26
+	    Hash*=26;
+	    
+	    a=(text[i]-'A'+1);
+	    Hash=(Hash+(a*(pow(26,i))));
+	    
+	    if(Hash==hash)
+	    cout<<i-2;
+	    
+	}
+	
+	return 0;
+}
